@@ -1,20 +1,14 @@
-#include "Server/Downloader/ServerDownloader.h"
-#include <iostream>
+#include <QApplication>
+#include "Server/Launcher/ServerLauncher.h"
 
-
+using namespace MCSL;
 
 int main(int argc, char** argv)
 {
-    std::cout << "Welcome to the Minecraft Server Launcher! Let's begin by creating your server!\n";
-    std::cout << "Which version do you want to play on?\n";
-    std::cout << "Version: ";
-    std::string version;
-    std::cin >> version;
+    QApplication app(argc, argv);
 
-    std::cout << "\nAlright! Attempting to download the server jar now!" << std::endl;
+    ServerLauncher launcher;
+    launcher.show();
 
-    MCSL::ServerDownloader downloader;
-    downloader.DownloadServer(version);
-
-    return 0;
+    return app.exec();
 }

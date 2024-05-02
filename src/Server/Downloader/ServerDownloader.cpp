@@ -6,14 +6,9 @@
 #include <filesystem>
 #include <fstream>
 #include <ostream>
-#include <sstream>
-#include <iomanip>
 #include <iostream>
 #include <string>
 #include "json/json.hpp"
-
-#define OPENSSL_NO_DEPRECATED_3_0
-#include <openssl/sha.h>
 
 using json = nlohmann::json;
 
@@ -29,7 +24,7 @@ namespace MCSL
         curl_global_cleanup();
     }
 
-    void ServerDownloader::DownloadServer(const std::string& version)
+    void ServerDownloader::DownloadServer(const std::string& version, const std::string& serverName)
     {
         ManifestBlob manifest = FetchManifest();
 
@@ -62,12 +57,14 @@ namespace MCSL
         FILE* fp;
         if(curl)
         {
-            std::string dirPath = "test/" + versionBlob.Id + "/";
+            std::string dirPath = "servers/" + serverName + "/";
             if(!std::filesystem::exists(dirPath))
             {
                 std::filesystem::create_directories(dirPath);
+                std::filesystem::current_path(dirPath);  
             }
-            std::string filePath = dirPath + "server-" + targetVersion + ".jar";
+            std::string filePath = "server-" + targetVersion + ".jar";
+            m_JarName = filePath;
             fp = fopen(filePath.c_str(), "wb");
             if(!fp)
             {

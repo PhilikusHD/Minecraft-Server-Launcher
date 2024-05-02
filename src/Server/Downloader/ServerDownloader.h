@@ -1,9 +1,7 @@
 #pragma once
 
 #include <string>
-#include <unordered_map>
 #include <vector>
-#include <map>
 #include <curl/curl.h>
 
 
@@ -48,8 +46,8 @@ namespace MCSL
         ServerDownloader();
         ~ServerDownloader();
 
-        void DownloadServer(const std::string& version);
-
+        void DownloadServer(const std::string& version, const std::string& serverName);
+        std::string GetJarName() const { return m_JarName; }
     private:
         ManifestBlob FetchManifest();
         VersionBlob FetchVersion(const std::string& versionId, const std::string& versionUrl);
@@ -62,6 +60,7 @@ namespace MCSL
 
         const std::string m_ManifestUrl = "https://launchermeta.mojang.com/mc/game/version_manifest.json";
         const std::string m_UserAgent = "Mozilla/5.0";
+        std::string m_JarName;
     };
     
 }
