@@ -1,0 +1,5 @@
+.cache/
+build/
+MCSL
+compile_commands.json
+test/
